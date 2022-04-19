@@ -1,4 +1,4 @@
-
+const selectionButtons = document.querySelector
 
 
 /* 

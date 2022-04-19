@@ -1,57 +1,52 @@
-const selectionButtons = document.querySelector
-
-
-/* 
-const getUserChoice = userInput => {
-    userInput = userInput.toLowerCase(); 
-    if(userInput === 'rock' || userInput === 'paper' || userInput === 'scissors' || userInput === 'bomb'){
-      return userInput;
-    }else{
-      console.log('We\'re sorry, that\'s an invalid response');
-    }
+const selectionButtons = document.querySelectorAll('[data-selection]')
+const finalColumn = document.querySelector('[data-final-column]')
+const selections = [
+  {
+    name: 'rock',
+    emoji: '🪨',
+    beats: 'scissors'
+  },
+  {
+    name: 'paper',
+    emoji: '📄',
+    beats: 'rock'
+  },
+  {
+    name: 'scissors',
+    emoji: '✂️',
+    beats: 'paper'
   }
-  
-  const getComputerChoice = () => {
-    const randomNumber = Math.floor(Math.random() * 3)
-    switch (randomNumber){
-      case 0:
-      return 'rock';
-      case 1:
-      return 'paper';
-      case 2:
-      return 'scissors';
-    }
-  };
-  
-  //Paper Beats Rock; Scissors Beats Paper; Rock Beats Scissors
-  
-  const determineWinner = (userChoice, computerChoice) => {
-    if(userChoice === computerChoice){
-      return 'This game was a tie!'
-    }else if(userChoice === 'rock' && computerChoice === 'paper'){
-      return 'Computer wins!'
-    }else if(userChoice === 'rock' && computerChoice === 'scissors'){
-      return 'User wins!'
-      }else if(userChoice === 'paper' && computerChoice === 'scissors'){
-        return 'Computer wins!'
-      }else if(userChoice === 'paper' && computerChoice === 'rock'){
-        return 'User wins!'
-      }else if(userChoice === 'scissors' && computerChoice === 'rock'){
-        return 'Computer wins!'
-      }else if(userChoice === 'scissors' && computerChoice === 'paper'){
-        return 'User wins!'
-      }else if(userChoice === 'bomb'){
-        return 'User wins! Nice Cheat code'
-      }
-      else {
-        return 'Invalid Game'
-      }
-  };
-  
-  const playGame = () => {
-    const userChoice = getUserChoice('Bomb')
-    const computerChoice = getComputerChoice()
-    console.log(determineWinner(userChoice, computerChoice));
-  }
-  
-  playGame(); */
+]
+
+selectionButtons.forEach(selectionButton => {
+  selectionButton.addEventListener('click', e => {
+    const selectionName = selectionButton.dataset.selection
+    const selection = selections.find(selection => selection.name === selectionName)
+    makeSelection(selection)
+  })
+})
+
+function makeSelection(selection) {
+  const computerSelection = randomSelection()
+  const personWinner = determineWinner(selection, computerSelection)
+  const computerWinner = determineWinner(computerSelection, selection)
+  addSelectionResult(computerSelection, computerWinner)
+  addSelectionResult(selection, personWinner)
+}
+
+function addSelectionResult(selection, winner) {
+  const div = document.createElement('div')
+  div.innerText = selection.emoji
+  div.classList.add('score-selection')
+  if (winner) div.classList.add('winner')
+  finalColumn.after(div)
+}
+
+function determineWinner(selection, opponentSelection) {
+  return selection.beats === opponentSelection.name
+}
+
+function randomSelection() {
+  const randomIndex = Math.floor(Math.random() * selections.length)
+  return selections[randomIndex]
+}

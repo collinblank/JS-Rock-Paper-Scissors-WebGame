@@ -37,8 +37,8 @@ body{
 .score-selection {
     opacity: .5;
 }
-
-.result-selection.winner{
-    opacity: 1;
-    font-size: 1.5rem;
+.score-selection.winner{
+    opacity: 1.0;
+    
 }
+

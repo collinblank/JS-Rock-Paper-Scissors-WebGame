@@ -73,3 +73,21 @@ hr{
     border-radius: 5px;
    
 }
+
+@media (max-width: 600px){
+    .selections {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .selection {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: 500ms;
+    }
+    
+}
